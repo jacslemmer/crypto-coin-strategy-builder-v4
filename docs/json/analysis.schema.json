@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/analysis.schema.json",
+  "title": "Trend Analysis (Schema v1.0)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "pair": { "type": "string", "pattern": "^[A-Z0-9]{2,}USDT$" },
+    "trends": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/trendEntry" },
+      "allOf": [
+        { "contains": { "type": "object", "properties": { "trend": { "const": "Up" } } }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "type": "object", "properties": { "trend": { "const": "Down" } } }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "type": "object", "properties": { "trend": { "const": "Sideways" } } }, "minContains": 1, "maxContains": 1 }
+      ]
+    },
+    "meta": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["schemaVersion", "id", "pair", "trends"],
+  "$defs": {
+    "probability": { "type": "number", "minimum": 0, "maximum": 1 },
+    "trendEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "trend": { "type": "string", "enum": ["Up", "Down", "Sideways"] },
+        "confidence": { "$ref": "#/$defs/probability" },
+        "countertrend": { "type": "string", "enum": ["Yes", "No", "Low", "Medium", "High"] },
+        "ct_confidence": { "$ref": "#/$defs/probability" }
+      },
+      "required": ["trend", "confidence", "countertrend", "ct_confidence"]
+    }
+  },
+  "examples": [
+    {
+      "schemaVersion": "1.0",
+      "id": "ae231",
+      "pair": "BTCUSDT",
+      "trends": [
+        { "trend": "Up", "confidence": 0.74, "countertrend": "Yes", "ct_confidence": 0.88 },
+        { "trend": "Down", "confidence": 0.32, "countertrend": "No", "ct_confidence": 0.59 },
+        { "trend": "Sideways", "confidence": 0.74, "countertrend": "Low", "ct_confidence": 0.73 }
+      ],
+      "meta": { "provider": "Grok", "model": "grok-vision-x" }
+    }
+  ]
+}
+
+
+

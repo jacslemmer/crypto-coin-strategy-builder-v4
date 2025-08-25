@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "id": "sample-001",
+  "pair": "ETHUSDT",
+  "trends": [
+    { "trend": "Up", "confidence": 0.61, "countertrend": "No", "ct_confidence": 0.27 },
+    { "trend": "Down", "confidence": 0.22, "countertrend": "Low", "ct_confidence": 0.41 },
+    { "trend": "Sideways", "confidence": 0.54, "countertrend": "Medium", "ct_confidence": 0.36 }
+  ],
+  "meta": { "provider": "Claude", "model": "claude-vision" }
+}
+
+
+

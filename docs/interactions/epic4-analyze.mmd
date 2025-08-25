@@ -1,0 +1,27 @@
+sequenceDiagram
+  autonumber
+  participant U as User
+  participant FE as Frontend
+  participant API as API
+  participant DB as D1/Postgres
+  participant AI as AI Providers
+
+  U->>FE: Open Analyze Trends
+  FE->>API: GET /api/anonymized?versionId=ID
+  U->>FE: Select coins/providers, click Analyze
+  FE->>API: POST /api/analysis/run {versionId, anonIds, providers}
+  loop for each provider and anon image
+    API->>AI: analyze(anon image) with strict JSON prompt
+    AI-->>API: JSON v1.0
+    API->>API: sanitize + validate (Ajv)
+    API->>DB: insert ai_results
+  end
+  API-->>FE: per-provider summary/status
+
+
+
+
+
+
+
+

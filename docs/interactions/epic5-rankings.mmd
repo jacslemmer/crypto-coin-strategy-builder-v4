@@ -1,0 +1,23 @@
+sequenceDiagram
+  autonumber
+  participant U as User
+  participant FE as Frontend
+  participant API as API
+  participant DB as D1/Postgres
+
+  U->>FE: Open Rankings
+  FE->>API: POST /api/rankings/compute {versionId, provider}
+  API->>DB: read ai_results for version/provider
+  API->>API: compute per-trend ranks (Trend_Rank, CT_Rank)
+  API->>API: compute Rank_Sum, tie-breakers
+  API->>DB: store rankings
+  API-->>FE: ranking table
+  FE-->>U: Buy/Keep/Sell cues
+
+
+
+
+
+
+
+

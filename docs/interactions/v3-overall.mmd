@@ -1,0 +1,48 @@
+sequenceDiagram
+  autonumber
+  participant U as User
+  participant FE as Frontend (React TS)
+  participant API as API (Workers/Node TS)
+  participant R2 as R2 (Images)
+  participant DB as DB (D1/Postgres)
+  participant AI as AI Providers
+
+  U->>FE: Step 1 - Fetch Screenshots
+  FE->>API: POST /api/fetch/start {limit, source}
+  API->>R2: upload full + anon images
+  API->>DB: insert versions, images
+  API-->>FE: versionId + progress
+
+  U->>FE: Step 2 - Anonymize Screenshots
+  FE->>API: POST /api/anonymize {versionId}
+  API->>DB: insert mappings (anon <-> full)
+  API-->>FE: counts + status
+
+  U->>FE: Step 3 - Charts
+  FE->>API: GET /api/versions and /images
+  API->>R2: signed URLs for previews
+  API-->>FE: metadata + preview URLs
+  FE-->>U: gallery + per-coin view
+
+  U->>FE: Step 4 - Analyze Trends
+  FE->>API: POST /api/analysis/run {versionId, anonIds, providers}
+  loop per provider and image
+    API->>AI: analyze(anon image) -> JSON v1.0
+    AI-->>API: {schemaVersion, id, pair, trends, meta}
+    API->>DB: insert ai_results (validated)
+  end
+  API-->>FE: analysis summary
+
+  U->>FE: Step 5 - Rankings
+  FE->>API: POST /api/rankings/compute {versionId, provider}
+  API->>DB: compute ranks (Trend_Rank, CT_Rank, Rank_Sum)
+  API-->>FE: ranking table
+  FE-->>U: Buy/Keep/Sell cues
+
+
+
+
+
+
+
+

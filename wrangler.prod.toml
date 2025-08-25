@@ -1,0 +1,59 @@
+# Cloudflare Production Configuration
+name = "ccsb-v3-prod"
+main = "dist/worker.js"
+compatibility_date = "2024-08-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Environment variables for production
+[vars]
+NODE_ENV = "production"
+LOG_LEVEL = "info"
+APP_VERSION = "1.0.0"
+
+# R2 bucket for production
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "ccsb-screens-prod"
+
+# D1 database for production
+[[d1_databases]]
+binding = "DB"
+database_name = "ccsb-db-prod"
+database_id = "prod-ccsb-db"
+
+# KV namespace for production logs
+[[kv_namespaces]]
+binding = "LOGS"
+id = "prod-logs"
+
+# Pages configuration for production
+[pages]
+name = "ccsb-v3-prod"
+project_name = "ccsb-v3-prod"
+
+# Workers configuration for production
+[workers_dev]
+name = "ccsb-v3-prod-worker"
+
+# Routes for production
+[[routes]]
+pattern = "ccsb.example.com/*"
+zone_name = "ccsb.example.com"
+
+# Environment-specific settings
+[env.production]
+name = "ccsb-v3-prod"
+vars = { NODE_ENV = "production", LOG_LEVEL = "info" }
+
+# Cron triggers for production
+[triggers]
+crons = [
+  "0 */4 * * *",  # Every 4 hours
+  "0 0 * * *"     # Daily at midnight
+]
+
+# Analytics (if enabled)
+[analytics_engine]
+binding = "ANALYTICS"
+
+

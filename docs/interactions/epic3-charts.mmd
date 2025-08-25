@@ -1,0 +1,23 @@
+sequenceDiagram
+  autonumber
+  participant U as User
+  participant FE as Frontend
+  participant API as API
+  participant R2 as R2
+  participant DB as D1/Postgres
+
+  U->>FE: Open Charts
+  FE->>API: GET /api/versions
+  U->>FE: Select version/coin
+  FE->>API: GET /api/versions/{id}/images?type=full&limit=thumbs
+  API->>R2: signed URLs
+  API-->>FE: images + URLs
+  FE->>U: gallery + per-coin view with overlay
+
+
+
+
+
+
+
+

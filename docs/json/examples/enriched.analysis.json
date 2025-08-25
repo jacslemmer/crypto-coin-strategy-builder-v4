@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.0",
+  "id": "2025-08-19T12:34:56Z-BTCUSDT-v7-12345",
+  "pair": "BTCUSDT",
+  "trends": [
+    { "trend": "Up", "confidence": 0.78, "countertrend": "Low", "ct_confidence": 0.22 },
+    { "trend": "Down", "confidence": 0.12, "countertrend": "No", "ct_confidence": 0.09 },
+    { "trend": "Sideways", "confidence": 0.10, "countertrend": "Medium", "ct_confidence": 0.31 }
+  ],
+  "meta": {
+    "provider": "Claude",
+    "model": "claude-vision",
+    "versionId": "v7",
+    "fullImageId": "img_full_btc_v7_0001",
+    "anonImageId": "img_anon_btc_v7_0001",
+    "timeframe": "1D",
+    "window": "1y",
+    "capturedAt": "2025-08-18T23:59:59Z",
+    "observations": { "hh_hl": true, "lh_ll": false, "ranging": false, "breakout": false, "extended": false },
+    "volatility_regime": "Normal",
+    "volatility_confidence": 0.62,
+    "momentum_quantiles": { "q14d": 0.68, "q90d": 0.74 },
+    "rationale": "HH/HL structure, non-ranging, moderate volatility; minor pullback risk.",
+    "calibration_hint": { "sum_to_one": true }
+  }
+}
+
+
+
+
+
+
+
+
+
+

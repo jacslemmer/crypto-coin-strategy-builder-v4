@@ -1,0 +1,28 @@
+sequenceDiagram
+  autonumber
+  participant U as User
+  participant FE as Frontend
+  participant API as API
+  participant R2 as R2
+  participant DB as D1/Postgres
+
+  U->>FE: Open Fetch Screenshots
+  FE->>API: POST /api/fetch/start {limit, source, includeAnonymized}
+  API->>API: build top list (CMC/CG) + USDT filter
+  loop per eligible pair
+    API->>API: generate TradingView URL (BINANCE:SYMBOLUSDT, 1D, 1y, light, raw)
+    API->>R2: upload full screenshot
+    API->>API: deterministic crop (anonymized)
+    API->>R2: upload anon screenshot
+    API->>DB: insert images rows
+  end
+  API->>DB: insert version row (counts)
+  API-->>FE: {versionId, jobId, progress}
+
+
+
+
+
+
+
+

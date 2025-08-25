@@ -1,0 +1,25 @@
+sequenceDiagram
+  autonumber
+  participant U as User
+  participant FE as Frontend
+  participant API as API
+  participant DB as D1/Postgres
+
+  U->>FE: Open Anonymize
+  FE->>API: GET /api/versions
+  FE->>API: POST /api/anonymize {versionId}
+  API->>DB: read images for versionId
+  loop per image
+    API->>API: deterministic crop
+    API->>DB: insert mapping (anon_image_id <-> full_image_id, pair)
+  end
+  API-->>FE: {ok:true, counts}
+  FE-->>U: split view anon vs full+meta
+
+
+
+
+
+
+
+
