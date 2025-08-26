@@ -112,4 +112,28 @@ export class MockPairsService implements PairsService {
   async getPairById(id: string): Promise<Pair | null> {
     return mockPairs.find(pair => pair.id === id) || null;
   }
+
+  async fetchPairs(limit = 15): Promise<{
+    success: boolean;
+    pairsFetched: number;
+    message: string;
+    error?: string;
+  }> {
+    // Mock implementation
+    return {
+      success: true,
+      pairsFetched: Math.min(limit, mockPairs.length),
+      message: `Successfully fetched ${Math.min(limit, mockPairs.length)} pairs`,
+    };
+  }
+
+  async getPairsCount(): Promise<{
+    success: boolean;
+    count: number;
+  }> {
+    return {
+      success: true,
+      count: mockPairs.length,
+    };
+  }
 }

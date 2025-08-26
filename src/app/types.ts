@@ -14,6 +14,16 @@ export interface ServerDeps {
 export interface PairsService {
   getPairs(params: GetPairsParams): Promise<GetPairsResponse>;
   getPairById(id: string): Promise<Pair | null>;
+  fetchPairs(limit?: number): Promise<{
+    success: boolean;
+    pairsFetched: number;
+    message: string;
+    error?: string;
+  }>;
+  getPairsCount(): Promise<{
+    success: boolean;
+    count: number;
+  }>;
 }
 
 export interface ChartsService {

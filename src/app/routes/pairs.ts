@@ -7,6 +7,20 @@ import { getStringParam, getNumberParam } from '../utils/queryParams.js';
 export function pairsRoutes(deps: ServerDeps) {
   const router = Router();
 
+  // POST /api/pairs/fetch - Fetch new trading pairs from external APIs
+  router.post('/fetch', async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const { limit = 15 } = req.body;
+      
+      const result = await deps.pairsService.fetchPairs(limit);
+      
+      res.json(result);
+    } catch (error) {
+      // Error will be handled by error middleware
+      throw error;
+    }
+  });
+
   // GET /api/pairs - Get trading pairs with pagination and filtering
   router.get('/', validatePairsQuery, async (req: AuthenticatedRequest, res: Response) => {
     try {
@@ -23,6 +37,16 @@ export function pairsRoutes(deps: ServerDeps) {
       res.json(result);
     } catch (error) {
       // Error will be handled by error middleware
+      throw error;
+    }
+  });
+
+  // GET /api/pairs/count - Get total count of trading pairs
+  router.get('/count', async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const result = await deps.pairsService.getPairsCount();
+      res.json(result);
+    } catch (error) {
       throw error;
     }
   });

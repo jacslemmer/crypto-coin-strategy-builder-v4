@@ -15,7 +15,7 @@ import { rankingsRoutes } from './routes/rankings.js';
 import { jobsRoutes } from './routes/jobs.js';
 import { versionsRoutes } from './routes/versions.js';
 import type { ServerDeps } from './types.js';
-import { createMockServices } from './services/index.js';
+import { createRealServices } from './services/realServices.js';
 
 export function createServer(deps: ServerDeps) {
   const app = express();
@@ -77,12 +77,12 @@ export function createServer(deps: ServerDeps) {
 
   // API routes (auth required)
   app.use('/api', authMiddleware);
-  app.use('/api/pairs', pairsRoutes(deps));
-  app.use('/api/charts', chartsRoutes(deps));
-  app.use('/api/analysis', analysisRoutes(deps));
-  app.use('/api/rankings', rankingsRoutes(deps));
-  app.use('/api/jobs', jobsRoutes(deps));
-  app.use('/api/versions', versionsRoutes(deps));
+  app.use('/api/v1/pairs', pairsRoutes(deps));
+  app.use('/api/v1/charts', chartsRoutes(deps));
+  app.use('/api/v1/analysis', analysisRoutes(deps));
+  app.use('/api/v1/rankings', rankingsRoutes(deps));
+  app.use('/api/v1/jobs', jobsRoutes(deps));
+  app.use('/api/v1/versions', versionsRoutes(deps));
 
   // 404 handler
   app.use('*', (req, res) => {
@@ -124,7 +124,7 @@ export function startServer(port = Number(process.env.PORT ?? 4000), deps?: Serv
 }
 
 function createDefaultDeps(): ServerDeps {
-  return createMockServices();
+  return createRealServices();
 }
 
 // Start server if this file is run directly

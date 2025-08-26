@@ -25,7 +25,8 @@ abstract class BaseRepository<T, TNew extends Record<string, any>> {
   }
 
   async findAll(): Promise<T[]> {
-    return await this.db.select().from(this.table);
+    const result = await this.db.select().from(this.table);
+    return result as T[];
   }
 
   async update(id: string, data: Partial<TNew>): Promise<T | undefined> {

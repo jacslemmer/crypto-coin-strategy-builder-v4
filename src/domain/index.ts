@@ -2,12 +2,16 @@
 export * from './types.js';
 // Re-export tradingview types, excluding UsdtPair which is already exported from types.ts
 export {
-  TradingViewUrlParams,
   defaultParams,
   buildTradingViewUrl,
   isUsdtPairSymbol,
   mapTickersToPreferredUsdtPair,
+  computeAnonymizedCropBox,
+} from './tradingview.js';
+
+// Re-export types separately
+export type {
+  TradingViewUrlParams,
   CropBox,
   Viewport,
-  computeAnonymizedCropBox,
 } from './tradingview.js';
